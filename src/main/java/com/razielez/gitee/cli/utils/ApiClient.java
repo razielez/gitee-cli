@@ -18,7 +18,7 @@ import java.util.Map;
 public final class ApiClient {
 
   final String GITEE_URL = "https://gitee.com/api/";
-  final int TIMEOUT_SEC = 10;
+  final int TIMEOUT_SEC = 60;
   private HttpClient httpClient;
   private ObjectMapper objectMapper;
 
