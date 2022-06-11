@@ -14,7 +14,7 @@ import picocli.CommandLine.Option;
 )
 public class PrListPrCommand extends AbstractPrCommand {
 
-  @Option(names = "-r", required = true, description = "repo")
+  @Option(names = "-r", description = "repo")
   private String repo;
 
   public PrListPrCommand() {
@@ -27,6 +27,7 @@ public class PrListPrCommand extends AbstractPrCommand {
     final String owner = cfg.owner();
     Map<String, Object> params = new HashMap<>();
     params.put("access_token", token);
+    repo = repo == null ? defaultRepo() : repo;
     Result<JsonNode> result = apiClient.get(
         newPullApi(owner, repo),
         params,

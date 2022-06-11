@@ -17,7 +17,7 @@ public class PrInfoCommand extends AbstractPrCommand {
     super.register();
   }
 
-  @Option(names = "-r", required = true, description = "git repo")
+  @Option(names = "-r", description = "git repo")
   private String repo;
   @Option(names = "-n", required = true, description = "pr number")
   private Integer number;
@@ -26,6 +26,7 @@ public class PrInfoCommand extends AbstractPrCommand {
   public Integer call() throws Exception {
     Map<String, Object> params = new HashMap<>();
     params.put("access_token", cfg.accessToken());
+    repo = repo == null ? defaultRepo() : repo;
     Result<JsonNode> result = apiClient.get(
         newPullApi(cfg.owner(), repo, number),
         params,

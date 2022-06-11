@@ -12,4 +12,12 @@ class ApplicationTest {
     Application.main(args);
   }
 
+  @Test
+  public void test() {
+    String property = System.getProperty("user.dir");
+    System.out.println(property);
+    String[] split = property.split("/");
+    System.out.println(split[split.length - 1]);
+  }
+
 }

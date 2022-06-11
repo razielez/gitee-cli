@@ -14,7 +14,7 @@ import picocli.CommandLine.Option;
 )
 public class PrEditPrCommand extends AbstractPrCommand {
 
-  @Option(names = "-r", required = true, description = "git repo")
+  @Option(names = "-r", description = "git repo")
   private String repo;
   @Option(names = "-n", required = true, description = "pr number")
   private Integer number;
@@ -41,6 +41,7 @@ public class PrEditPrCommand extends AbstractPrCommand {
       params.put("state", State.closed);
     }
     params.put("draft", draft);
+    repo = repo == null ? defaultRepo() : repo;
     Result<JsonNode> result = apiClient.patch(
         newPullApi(cfg.owner(), repo, number),
         params,

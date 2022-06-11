@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.freva.asciitable.AsciiTable;
 import com.razielez.gitee.cli.command.AbstractCommand;
 import com.razielez.gitee.cli.utils.Assert;
+import com.razielez.gitee.cli.utils.FileUtils;
+import com.razielez.gitee.cli.utils.RuntimeUtils;
 
 public abstract class AbstractPrCommand extends AbstractCommand {
 
@@ -45,6 +47,14 @@ public abstract class AbstractPrCommand extends AbstractCommand {
         datas
     );
     System.out.println(table);
+  }
+
+  protected String defaultRepo() {
+    return FileUtils.currentProject();
+  }
+
+  protected String defaultBranch() {
+    return RuntimeUtils.currentBranch();
   }
 
   private Object[][] parsePrDataList(JsonNode data) {

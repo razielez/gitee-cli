@@ -15,17 +15,17 @@ import picocli.CommandLine.Option;
 )
 public class PrCreatePrCommand extends AbstractPrCommand {
 
-  @Option(names = "-r", required = true, description = "repo")
+  @Option(names = "-r", description = "repo")
   private String repo;
   @Option(names = "-t", required = true, description = "title")
   private String title;
-  @Option(names = "-h", required = true, description = "origin branch, eg: username:branch")
+  @Option(names = "-h", description = "origin branch, eg: username:branch")
   private String head;
-  @Option(names = "-b", required = false, description = "base branch")
+  @Option(names = "-b", description = "base branch")
   private String base;
-  @Option(names = "-c", required = false, description = "commit content")
+  @Option(names = "-c", description = "commit content")
   private String content;
-  @Option(names = "-i", required = false, description = "issue id")
+  @Option(names = "-i", description = "issue id")
   private String issue;
 
   public PrCreatePrCommand() {
@@ -36,11 +36,13 @@ public class PrCreatePrCommand extends AbstractPrCommand {
   public Integer call() throws Exception {
     Map<String, Object> params = new HashMap<>();
     params.put("title", title);
+    head = head == null ? defaultBranch() : head;
     params.put("head", cfg.owner() + ":" + head);
     params.put("base", StringUtils.isEmpty(base) ? cfg.baseBranch() : base);
     params.put("access_token", cfg.accessToken());
     params.put("body", content);
     params.put("issue", issue);
+    repo = repo == null ? defaultRepo() : repo;
     Result<JsonNode> result = apiClient.post(
         newPullApi(cfg.owner(), repo),
         params,
