@@ -27,7 +27,7 @@ todo: 其余功能待完善, 自己需要才会封装...
 
 安装 `native-image` 组件
 ```bash
-$ gu installl native-image
+$ gu install native-image
 ```
 验证
 ```bash
