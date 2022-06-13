@@ -9,7 +9,7 @@ import com.razielez.gitee.cli.utils.RuntimeUtils;
 
 public abstract class AbstractPrCommand extends AbstractCommand {
 
-  static String[] PR_HEADER = {"Id", "Title", "Body", "Number", "State", "Username", " Ref", "Sha"};
+  static String[] PR_HEADER = {"Id", "Title", "Body", "Number", "State", "Username", "Head",  "Base", "Sha"};
 
   protected String newPullApi(String owner, String repo) {
     return String.format(
@@ -75,6 +75,7 @@ public abstract class AbstractPrCommand extends AbstractCommand {
         node.get("number").asText(),
         node.get("state").asText().trim(),
         node.get("user").get("login").asText().trim(),
+        node.get("head").get("ref").asText(),
         node.get("base").get("ref").asText(),
         node.get("base").get("sha").asText().trim()
     };
