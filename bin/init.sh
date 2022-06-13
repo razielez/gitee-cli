@@ -8,9 +8,9 @@ if [ ! -d "${GITEE_HOME}" ]; then
   mkdir "$GITEE_HOME"
   touch "$GITEE_CONFIG"
 fi
-#./bin/run.sh
-#./bin/build.sh
-CLI_FILE=${GITEE_HOME}/${CLI_NAME}
+./bin/run.sh
+./bin/build.sh
+ CLI_FILE=${GITEE_HOME}/${CLI_NAME}
 if [ ! -f "${CLI_FILE}" ]; then
   echo "rm ${CLI_FILE}"
   rm "${CLI_FILE}"
