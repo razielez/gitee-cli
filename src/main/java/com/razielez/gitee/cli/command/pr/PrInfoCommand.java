@@ -3,8 +3,10 @@ package com.razielez.gitee.cli.command.pr;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.razielez.gitee.cli.constants.GiteeConstants;
 import com.razielez.gitee.cli.utils.Result;
+import com.razielez.gitee.cli.utils.RuntimeUtils;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BinaryOperator;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -20,26 +22,54 @@ public class PrInfoCommand extends AbstractPrCommand {
 
   @Option(names = "-r", description = "git repo")
   private String repo;
-  @Option(names = "-n", required = true, description = "pr number")
+  @Option(names = "-n", description = "pr number")
   private Integer number;
-  @Option(names = "-b", required = false, description = "business link")
-  private boolean business = true;
+  @Option(names = "-b", description = "business link")
+  private Boolean business = true;
 
   @Override
   public Integer call() throws Exception {
     Map<String, Object> params = new HashMap<>();
     params.put("access_token", cfg.accessToken());
     repo = repo == null ? defaultRepo() : repo;
-    Result<JsonNode> result = apiClient.get(
-        newPullApi(cfg.owner(), repo, number),
-        params,
-        JsonNode.class
-    );
-    if (!result.isOk()) {
-      System.out.println(result);
+    final String owner = cfg.owner();
+    String branch = RuntimeUtils.currentBranch();
+    JsonNode prInfo = null;
+    if (number == null) {
+      Result<JsonNode> result = apiClient.get(
+          newPullApi(owner, repo),
+          params,
+          JsonNode.class
+      );
+      if (!result.isOk()) {
+        System.out.println(result);
+        return -1;
+      }
+      JsonNode list = result.data();
+      for (JsonNode node : list) {
+        if (node.get("head").get("ref").asText().equals(branch)) {
+          prInfo = node;
+          break;
+        }
+      }
+    } else {
+      Result<JsonNode> result = apiClient.get(
+          newPullApi(owner, repo),
+          params,
+          JsonNode.class
+      );
+      if (!result.isOk()) {
+        System.out.println(result);
+        return -1;
+      }
+      prInfo = result.data();
+    }
+    if (prInfo == null) {
+      System.out.println("Pr not found!");
       return -1;
     }
-    printPr(result.data());
+    number = prInfo.get("number").asInt();
+    printPr(prInfo);
     System.out.println("Pull Request Url: " + getPrUrl(repo, cfg.owner(), number, business));
     return 0;
   }

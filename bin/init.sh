@@ -10,9 +10,9 @@ if [ ! -d "${GITEE_HOME}" ]; then
 fi
 ./bin/run.sh
 ./bin/build.sh
- CLI_FILE=${GITEE_HOME}/${CLI_NAME}
+CLI_FILE=${GITEE_HOME}/${CLI_NAME}
 if [ ! -f "${CLI_FILE}" ]; then
   echo "rm ${CLI_FILE}"
   rm "${CLI_FILE}"
 fi
-cp  ./target/${CLI_NAME} "${GITEE_HOME}"/
+move  ./target/${CLI_NAME} "${GITEE_HOME}"/

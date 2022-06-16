@@ -32,7 +32,6 @@ public class PrListPrCommand extends AbstractPrCommand {
         newPullApi(owner, repo),
         params,
         JsonNode.class
-
     );
     if (!result.isOk()) {
       System.err.println(result);
