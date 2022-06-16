@@ -6,5 +6,7 @@ public interface GitConfig {
 
   String owner();
 
+  String businessName();
+
   String accessToken();
 }

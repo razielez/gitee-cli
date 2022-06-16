@@ -12,6 +12,7 @@ import java.util.Properties;
 public final class GiteeConfig implements GitConfig {
 
   private String owner;
+  private String businessName;
   private String accessToken;
   private String baseBranch = "master";
 
@@ -39,6 +40,7 @@ public final class GiteeConfig implements GitConfig {
       if (StringUtils.isNotEmpty(properties.getProperty(GiteeConstants.GITEE_BASE_BRANCH))) {
         this.baseBranch = properties.getProperty(GiteeConstants.GITEE_BASE_BRANCH);
       }
+      this.businessName = properties.getProperty(GiteeConstants.GITEE_BUSINESS_NAME);
     } catch (Exception e) {
       throw new RuntimeException("加载配置文件失败: " + file.toString());
     }
@@ -71,6 +73,11 @@ public final class GiteeConfig implements GitConfig {
   @Override
   public String owner() {
     return owner;
+  }
+
+  @Override
+  public String businessName() {
+    return businessName;
   }
 
   @Override

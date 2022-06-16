@@ -9,7 +9,9 @@ import com.razielez.gitee.cli.utils.RuntimeUtils;
 
 public abstract class AbstractPrCommand extends AbstractCommand {
 
-  static String[] PR_HEADER = {"Id", "Title", "Body", "Number", "State", "Username", "Head",  "Base", "Sha"};
+  static String[] PR_HEADER = {"Id", "Title", "Body", "Number", "State", "Username", "Head", "Base", "Sha"};
+
+  static String[] PR_INFO_HEADER = {"Id", "Title", "Body", "Number", "State", "Username", "Head", "Base", "Sha"};
 
   protected String newPullApi(String owner, String repo) {
     return String.format(
