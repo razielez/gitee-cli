@@ -23,7 +23,7 @@ public class PrInfoCommand extends AbstractPrCommand {
   @Option(names = "-n", required = true, description = "pr number")
   private Integer number;
   @Option(names = "-b", required = false, description = "business link")
-  private boolean business = false;
+  private boolean business = true;
 
   @Override
   public Integer call() throws Exception {
@@ -40,13 +40,13 @@ public class PrInfoCommand extends AbstractPrCommand {
       return -1;
     }
     printPr(result.data());
-    System.out.println("Pull Request Url: " + getPrUrl(repo, repo, number, business));
+    System.out.println("Pull Request Url: " + getPrUrl(repo, cfg.owner(), number, business));
     return 0;
   }
 
   private String getPrUrl(String repo, String owner, int number, boolean business) {
     return business ?
-        String.format("%s/%s/repos/%s/%s/pulls/%d", GiteeConstants.BUSINESS_DOMAIN, cfg.businessName(), owner, repo, number)
-        : String.format("%s/%s/%s/pulls/%d", GiteeConstants.DOMAIN, owner, repo, number);
+        String.format("%s%s/repos/%s/%s/pulls/%d", GiteeConstants.BUSINESS_DOMAIN, cfg.businessName(), owner, repo, number)
+        : String.format("%s%s/%s/pulls/%d", GiteeConstants.DOMAIN, owner, repo, number);
   }
 }
