@@ -15,4 +15,4 @@ if [ ! -f "${CLI_FILE}" ]; then
   echo "rm ${CLI_FILE}"
   rm "${CLI_FILE}"
 fi
-move  ./target/${CLI_NAME} "${GITEE_HOME}"/
+mv  ./target/${CLI_NAME} "${GITEE_HOME}"/

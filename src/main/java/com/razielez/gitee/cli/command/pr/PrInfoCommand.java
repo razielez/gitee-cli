@@ -54,7 +54,7 @@ public class PrInfoCommand extends AbstractPrCommand {
       }
     } else {
       Result<JsonNode> result = apiClient.get(
-          newPullApi(owner, repo),
+          newPullApi(owner, repo, number),
           params,
           JsonNode.class
       );
