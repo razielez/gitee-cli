@@ -76,7 +76,8 @@ public final class ApiClient {
     HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
     if (response.statusCode() != 200) {
       String body = response.body();
-      System.out.println(request);
+      System.out.println("Request: " + request);
+      System.out.println("Response: " + response);
       return parseErrorResult(body);
     }
     return Result.ok(objectMapper.readValue(response.body(), clz));
