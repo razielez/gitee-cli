@@ -74,7 +74,7 @@ public final class ApiClient {
 
   private <T> Result<T> send(HttpRequest request, Class<T> clz) throws IOException, InterruptedException {
     HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
-    if (response.statusCode() >= 200 && response.statusCode() < 300) {
+    if (!successCode(response.statusCode())) {
       String body = response.body();
       System.out.println("Request: " + request);
       System.out.println("Response: " + response);
@@ -100,6 +100,10 @@ public final class ApiClient {
       message = sb.toString();
     }
     return Result.failed(code, message);
+  }
+
+  private boolean successCode(int code) {
+    return code >= 200 && code < 300;
   }
 
   private String join(String url, Map<String, Object> queryParams) {
