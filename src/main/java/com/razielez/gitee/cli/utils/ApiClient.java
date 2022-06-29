@@ -74,7 +74,7 @@ public final class ApiClient {
 
   private <T> Result<T> send(HttpRequest request, Class<T> clz) throws IOException, InterruptedException {
     HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
-    if (response.statusCode() != 200) {
+    if (response.statusCode() >= 200 && response.statusCode() < 300) {
       String body = response.body();
       System.out.println("Request: " + request);
       System.out.println("Response: " + response);

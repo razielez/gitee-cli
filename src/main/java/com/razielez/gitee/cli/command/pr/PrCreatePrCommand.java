@@ -52,6 +52,7 @@ public class PrCreatePrCommand extends AbstractPrCommand {
       System.out.println(result);
       return -1;
     }
+    System.out.println("Pr create success");
     return 0;
   }
 }
